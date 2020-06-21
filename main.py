@@ -13,7 +13,6 @@ matplotlib.use("Agg")
 import seaborn as sns 
 
 
-
 def main():
 	"""Semi Automated ML App with Streamlit """
 
