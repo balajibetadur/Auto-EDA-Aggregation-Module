@@ -27,6 +27,10 @@ def main():
 		if data is not None:
 			df = pd.read_csv(data)
 			st.dataframe(df.head())
+			profile = ProfileReport(df,title = "EDA Report")
+			profile.to_file(output_file = 'report.html')
+			url = 'report.html'
+			newReport = sweetviz.analyze([df,'Data'],target_feat='Salary') 
 
 			
 			
@@ -65,10 +69,7 @@ def main():
 				st.write(pie_plot)
 				st.pyplot()
 
-			profile = ProfileReport(df,title = "EDA Report")
-			profile.to_file(output_file = 'report.html')
-			url = 'report.html'
-			newReport = sweetviz.analyze([df,'Data'],target_feat='Salary') 
+
 			 
 			if st.button('Prepare Report'):
 				webbrowser.open_new_tab(url)
