@@ -3,15 +3,16 @@ import streamlit as st
 
 # EDA Pkgs
 import pandas as pd 
+import sweetviz
 import numpy as np 
-
-
+from pandas_profiling import ProfileReport
+import webbrowser
 # Data Viz Pkg
 import matplotlib.pyplot as plt 
 import matplotlib
 matplotlib.use("Agg")
 import seaborn as sns 
-
+st.markdown("<title style='text-align: center; color: red;'>Some title</title>", unsafe_allow_html=True)
 
 def main():
 	"""Semi Automated ML App with Streamlit """
@@ -26,6 +27,8 @@ def main():
 		if data is not None:
 			df = pd.read_csv(data)
 			st.dataframe(df.head())
+
+			
 			
 
 			if st.checkbox("Show Shape"):
@@ -61,6 +64,15 @@ def main():
 				pie_plot = df[column_to_plot].value_counts().plot.pie(autopct="%1.1f%%")
 				st.write(pie_plot)
 				st.pyplot()
+
+			profile = ProfileReport(df,title = "EDA Report")
+			profile.to_file(output_file = 'report.html')
+			url = 'report.html'
+			newReport = sweetviz.analyze([df,'Data'],target_feat='Salary') 
+			 
+			if st.button('Prepare Report'):
+				webbrowser.open_new_tab(url)
+				report2 = newReport.show_html('report2.html')
 
 
 
